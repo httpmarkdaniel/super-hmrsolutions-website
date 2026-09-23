@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Let real files and directories (assets, images, etc.) serve normally.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else is a client-side route (e.g. /solutions/structured-cabling) —
+  # hand it to index.html so React Router can render it instead of Apache
+  # returning its own 404 for a path with no matching file on disk.
+  RewriteRule ^ index.html [L]
+</IfModule>
